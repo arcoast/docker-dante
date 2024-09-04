@@ -1,0 +1,14 @@
+#!/usr/bin/with-contenv sh
+
+umask 022
+
+# Check if config exists in /config, copy if not
+[[ ! -e /config/sockd.conf ]] && \
+        cp /etc/sockd.conf /config/sockd.conf
+
+# Permissions
+chmod u+rw \
+        /config/sockd.conf
+
+# Run dante service
+exec s6-setuidgid abc /usr/sbin/sockd -p /config/sockd.pid -f /config/sockd.conf

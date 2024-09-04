@@ -1,0 +1,16 @@
+services:
+    dante:
+        image: lsiobase/alpine:3.20
+        container_name: dante
+        ports:
+            - 1080:1080
+        environment:
+            - TZ=${TZ}
+            - PUID=${PUID}
+            - PGID=${PGID}
+            - DOCKER_MODS=linuxserver/mods:universal-package-install
+            - INSTALL_PACKAGES=dante-server
+        volumes:
+            - ${CONFIG}/dante/dante:/config
+            - ${CONFIG}/dante/custom-services.d:/custom-services.d:ro
+        restart: always
